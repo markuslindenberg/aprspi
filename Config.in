@@ -1,0 +1,2 @@
+source "$BR2_EXTERNAL_APRSPI_PATH/package/ell/Config.in"
+source "$BR2_EXTERNAL_APRSPI_PATH/package/iwd/Config.in"

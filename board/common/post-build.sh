@@ -6,9 +6,6 @@ set -e
 # Disable systemd-journald persistent storage
 mkdir -p ${TARGET_DIR}/etc/systemd/journald.conf.d
 echo "[Journal]\nStorage=volatile" > ${TARGET_DIR}/etc/systemd/journald.conf.d/volatile.conf
-if [ -e ${TARGET_DIR}/var/log/journal ]; then
-  rmdir ${TARGET_DIR}/var/log/journal
-fi
 
 # Enable resolved stub resolver
 ln -sf ../run/systemd/resolve/stub-resolv.conf ${TARGET_DIR}/etc/resolv.conf
@@ -24,3 +21,7 @@ if ! grep -qE '^HostKey' "${TARGET_DIR}/etc/ssh/sshd_config"; then
 	echo "HostKey /boot/ssh_host_ed25519_key" >> ${TARGET_DIR}/etc/ssh/sshd_config
 fi
 
+# Allow SSH root login for now
+if ! grep -qE '^PermitRootLogin' "${TARGET_DIR}/etc/ssh/sshd_config"; then
+	echo "PermitRootLogin yes" >> ${TARGET_DIR}/etc/ssh/sshd_config
+fi
