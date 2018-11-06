@@ -1,0 +1,18 @@
+--- a/systemd/gpsd.service      2018-09-23 01:24:39.000000000 +0200
++++ b/systemd/gpsd.service      2018-11-06 18:09:15.083619570 +0100
+@@ -2,13 +2,11 @@
+ Description=GPS (Global Positioning System) Daemon
+ Requires=gpsd.socket
+ # Needed with chrony SOCK refclock
+-After=chronyd.service
++After=chrony.service
+
+ [Service]
+-Type=forking
+ EnvironmentFile=-/etc/default/gpsd
+-EnvironmentFile=-/etc/sysconfig/gpsd
+-ExecStart=/usr/local/sbin/gpsd $GPSD_OPTIONS $OPTIONS $DEVICES
++ExecStart=/usr/sbin/gpsd -N $OPTIONS $DEVICES
+
+ [Install]
+ WantedBy=multi-user.target
