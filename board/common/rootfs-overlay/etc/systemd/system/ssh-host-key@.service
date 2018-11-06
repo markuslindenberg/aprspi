@@ -1,12 +1,9 @@
 [Unit]
 Description=Generate %I SSH Host Key
-ConditionPathExists=!/boot/ssh_host_%I_key  
+ConditionPathExists=!/boot/ssh_host_%I_key
+After=rngd.service
 Before=sshd.service
-            
-[Service]                                                                                                                                                        
-Type=oneshot                                                                                                                                                     
-ExecStart=/usr/bin/ssh-keygen -t %I -f /boot/ssh_host_%I_key                                                                                                     
-                                                                    
-[Install]             
-WantedBy=sshd.service
 
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ssh-keygen -t %I -f /boot/ssh_host_%I_key
