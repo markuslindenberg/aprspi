@@ -1,0 +1,7 @@
+--- /dev/null	2018-10-13 20:16:55.216441777 +0200
++++ b/misc/CMakeLists.txt	2018-11-07 00:34:58.053334303 +0100
+@@ -0,0 +1,4 @@
++cmake_minimum_required (VERSION 3.1)
++project (misc)
++include_directories (${CMAKE_SOURCE_DIR})
++add_library (misc STATIC strlcpy.c strlcat.c)

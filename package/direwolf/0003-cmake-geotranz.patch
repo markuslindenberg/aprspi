@@ -1,0 +1,7 @@
+--- /dev/null	2018-10-13 20:16:55.216441777 +0200
++++ b/geotranz/CMakeLists.txt	2018-11-07 00:35:59.849982831 +0100
+@@ -0,0 +1,4 @@
++cmake_minimum_required (VERSION 3.1)
++project (geotranz)
++add_library (geotranz STATIC error_string.c mgrs.c polarst.c tranmerc.c ups.c usng.c utm.c)
++target_link_libraries (geotranz m)

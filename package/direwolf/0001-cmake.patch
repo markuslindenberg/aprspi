@@ -1,0 +1,33 @@
+--- /dev/null	2018-10-13 20:16:55.216441777 +0200
++++ b/CMakeLists.txt	2018-11-06 23:51:39.710211279 +0100
+@@ -0,0 +1,30 @@
++cmake_minimum_required (VERSION 3.1)
++project (direwolf)
++
++add_definitions (-D_XOPEN_SOURCE=600 -D_DEFAULT_SOURCE=1 -DUSE_ALSA -DENABLE_GPSD -DUSE_HAMLIB -DUSE_CM108)
++find_package (Threads REQUIRED)
++link_libraries (m Threads::Threads)
++
++add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/fsk_fast_filter.h COMMAND gen_fff > ${CMAKE_CURRENT_BINARY_DIR}/fsk_fast_filter.h)
++include_directories (${CMAKE_CURRENT_BINARY_DIR})
++
++add_subdirectory (misc)
++add_subdirectory (geotranz)
++include_directories (geotranz)
++
++set (DIREWOLF_SOURCES direwolf.c
++	config.c recv.c demod.c dsp.c demod_afsk.c demod_psk.c demod_9600.c hdlc_rec.c
++	hdlc_rec2.c multi_modem.c rdq.c rrbb.c dlq.c
++	fcs_calc.c ax25_pad.c ax25_pad2.c xid.c
++	decode_aprs.c symbols.c server.c kiss.c kissserial.c kissnet.c kiss_frame.c hdlc_send.c fcs_calc.c
++	gen_tone.c audio.c audio_stats.c digipeater.c cdigipeater.c pfilter.c dedupe.c tq.c xmit.c morse.c
++	ptt.c beacon.c encode_aprs.c latlong.c encode_aprs.c textcolor.c
++	dtmf.c aprs_tt.c tt_user.c tt_text.c igate.c waypoint.c serial_port.c log.c telemetry.c
++	dwgps.c dwgpsnmea.c dwgpsd.c dtime_now.c mheard.c ax25_link.c cm108.c
++	${CMAKE_CURRENT_BINARY_DIR}/fsk_fast_filter.h
++	)
++add_executable (direwolf ${DIREWOLF_SOURCES})
++target_link_libraries (direwolf misc geotranz asound gps hamlib udev)
++
++install (TARGETS direwolf DESTINATION bin)
++install (FILES tocalls.txt symbols-new.txt symbolsX.txt DESTINATION share/direwolf)

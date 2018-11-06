@@ -1,0 +1,22 @@
+diff --git a/dwgpsd.c b/dwgpsd.c
+index 5709497..5c916d3 100644
+--- a/dwgpsd.c
++++ b/dwgpsd.c
+@@ -57,7 +57,7 @@
+ // Debian bug report:  direwolf (1.2-1) FTBFS with libgps22 as part of the gpsd transition (#803605):
+ // dwgps.c claims to only support GPSD_API_MAJOR_VERSION 5, but also builds successfully with
+ // GPSD_API_MAJOR_VERSION 6 provided by libgps22 when the attached patch is applied.
+-#if GPSD_API_MAJOR_VERSION < 5 || GPSD_API_MAJOR_VERSION > 6
++#if GPSD_API_MAJOR_VERSION < 5 || GPSD_API_MAJOR_VERSION > 7
+ #error libgps API version might be incompatible.
+ #endif
+ 
+@@ -257,7 +257,7 @@ static void * read_gpsd_thread (void *arg)
+ 	    /* Fall thru to read which should get error and bail out. */
+ 	  }
+ 
+-	  if (gps_read (&gpsdata) == -1) {
++	  if (gps_read (&gpsdata, NULL, 0) == -1) {
+ 	    text_color_set(DW_COLOR_ERROR);
+ 
+ 	    dw_printf ("------------------------------------------\n");

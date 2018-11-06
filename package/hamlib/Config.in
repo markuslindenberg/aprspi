@@ -1,0 +1,8 @@
+config BR2_PACKAGE_HAMLIB
+        bool "hamlib"
+        select BR2_PACKAGE_READLINE
+	select BR2_PACKAGE_LIBUSB
+        help
+          Ham radio control library
+
+          https://hamlib.github.io/

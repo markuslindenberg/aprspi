@@ -1,0 +1,7 @@
+config BR2_PACKAGE_HOST_GEN_FFF
+        bool "host gen_fff"
+        help
+          gen_fff generates fsk_fast_filter.h needed to compile
+          Direwolf.
+
+          https://github.com/wb2osz/direwolf/

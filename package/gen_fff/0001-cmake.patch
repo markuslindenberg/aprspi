@@ -1,0 +1,11 @@
+--- /dev/null	2018-10-13 20:16:55.216441777 +0200
++++ b/CMakeLists.txt	2018-11-07 00:06:25.251449712 +0100
+@@ -0,0 +1,8 @@
++cmake_minimum_required (VERSION 3.1)
++project (gen_fff)
++
++add_executable (gen_fff demod_afsk.c dsp.c textcolor.c)
++target_compile_definitions (gen_fff PRIVATE GEN_FFF)
++target_link_libraries (gen_fff m)
++
++install (TARGETS gen_fff DESTINATION bin)

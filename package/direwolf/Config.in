@@ -1,0 +1,12 @@
+config BR2_PACKAGE_DIREWOLF
+        bool "direwolf"
+        select BR2_PACKAGE_ALSA_LIB
+        select BR2_PACKAGE_GPSD
+        select BR2_PACKAGE_HAMLIB
+        select BR2_PACKAGE_HOST_GEN_FFF
+	depends on BR2_PACKAGE_HAS_UDEV
+        help
+          Dire Wolf is a software "soundcard" AX.25 packet modem/TNC
+          and APRS encoder/decoder.
+
+          https://github.com/wb2osz/direwolf/
