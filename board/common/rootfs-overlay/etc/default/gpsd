@@ -1,2 +1,2 @@
 DEVICES=/dev/ttyS0
-OPTIONS=-n -r
+OPTIONS=-D 1 -n -r
