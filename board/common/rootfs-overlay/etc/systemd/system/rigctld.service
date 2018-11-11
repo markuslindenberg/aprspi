@@ -1,0 +1,15 @@
+[Unit]
+Description=Hamlib TCP rig control daemon
+
+[Service]
+RuntimeDirectory=rigctld
+RuntimeDirectoryPreserve=yes
+
+DynamicUser=yes
+Group=dialout
+
+EnvironmentFile=-/boot/rigctld.txt
+ExecStart=/usr/bin/rigctld -vv $OPTIONS
+
+[Install]
+WantedBy=multi-user.target
