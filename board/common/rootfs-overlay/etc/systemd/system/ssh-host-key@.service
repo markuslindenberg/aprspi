@@ -2,7 +2,6 @@
 Description=Generate %I SSH Host Key
 ConditionPathExists=!/boot/ssh_host_%I_key
 After=rngd.service
-Before=sshd.service
 
 [Service]
 Type=oneshot
