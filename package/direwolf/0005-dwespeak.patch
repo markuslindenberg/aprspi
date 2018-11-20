@@ -1,12 +1,15 @@
 diff --git a/dwespeak.sh b/dwespeak.sh
-index 341d2cf..cec4f72 100644
+index 341d2cf..f87de2d 100644
 --- a/dwespeak.sh
 +++ b/dwespeak.sh
-@@ -1,5 +1,5 @@
+@@ -1,5 +1,8 @@
 -#!/bin/bash
 +#!/bin/sh
  chan=$1
  msg=$2
  sleep 1
 -espeak -v en-sc "$msg"
-+exec /usr/bin/espeak -v en -s 130 "$msg"
++WAVFILE=$(mktemp -u).wav
++/usr/bin/pico2wave -w $WAVFILE -l en-GB "$msg"
++/usr/bin/aplay $WAVFILE
++rm -f $WAVFILE
