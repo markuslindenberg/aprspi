@@ -1,0 +1,9 @@
+config BR2_PACKAGE_SVOX
+	bool "svox"
+        select BR2_PACKAGE_POPT
+	help
+          The SVOX Pico engine is a software speech synthesizer for German,
+          English (GB and US), Spanish, French and Italian.
+
+          SVOX produces a clear and distinct speech output made possible by
+          the use of Hidden Markov Model (HMM) algorithms. 
