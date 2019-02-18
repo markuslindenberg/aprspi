@@ -47,11 +47,11 @@ The main design goals are robustness and tight integration of all included compo
 Please read the excellent [Buildroot user manual](https://buildroot.org/downloads/manual/manual.html) and install all requirements listed there.
 
 ```
-git clone -b 2018.11-rc1 https://git.busybox.net/buildroot
+git clone -b 2018.11.2 https://git.busybox.net/buildroot
 git clone https://github.com/markuslindenberg/aprspi.git
 
 cd buildroot
-make BR2_EXTERNAL=../aprspi aprspi_raspi3_defconfig
+make BR2_EXTERNAL=../aprspi aprspi_raspi3-64_defconfig
 make
 ```
 
