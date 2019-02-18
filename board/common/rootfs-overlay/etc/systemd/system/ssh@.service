@@ -5,7 +5,7 @@ After=ssh-host-key@rsa.service ssh-host-key@ecdsa.service ssh-host-key@ed25519.s
 
 [Service]
 ExecStart=/usr/sbin/sshd -i -e 
+SuccessExitStatus=255
 StandardInput=socket
 StandardOutput=socket
 StandardError=journal
-

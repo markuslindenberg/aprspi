@@ -3,6 +3,9 @@
 set -u
 set -e
 
+# Ensure /boot mountpoint exists
+mkdir -p ${TARGET_DIR}/boot
+
 # Disable systemd-journald persistent storage
 mkdir -p ${TARGET_DIR}/etc/systemd/journald.conf.d
 echo "[Journal]\nStorage=volatile" > ${TARGET_DIR}/etc/systemd/journald.conf.d/volatile.conf
