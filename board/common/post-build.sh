@@ -13,18 +13,3 @@ echo "[Journal]\nStorage=volatile" > ${TARGET_DIR}/etc/systemd/journald.conf.d/v
 # Enable resolved stub resolver
 ln -sf ../run/systemd/resolve/stub-resolv.conf ${TARGET_DIR}/etc/resolv.conf
 
-if ! grep -qE ' /boot' "${TARGET_DIR}/etc/fstab"; then
-	echo "/dev/mmcblk0p1 /boot vfat rw,noatime,fmask=0177,dmask=0077,flush,discard 0 0" >> ${TARGET_DIR}/etc/fstab
-fi
-
-# Set SSH host key location to /boot
-if ! grep -qE '^HostKey' "${TARGET_DIR}/etc/ssh/sshd_config"; then
-	echo "HostKey /boot/ssh_host_rsa_key" >> ${TARGET_DIR}/etc/ssh/sshd_config
-	echo "HostKey /boot/ssh_host_ecdsa_key" >> ${TARGET_DIR}/etc/ssh/sshd_config
-	echo "HostKey /boot/ssh_host_ed25519_key" >> ${TARGET_DIR}/etc/ssh/sshd_config
-fi
-
-# Allow SSH root login for now
-if ! grep -qE '^PermitRootLogin' "${TARGET_DIR}/etc/ssh/sshd_config"; then
-	echo "PermitRootLogin yes" >> ${TARGET_DIR}/etc/ssh/sshd_config
-fi

@@ -1,22 +1,16 @@
 [Unit]
 Description=Software AX.25 packet modem/TNC and APRS encoder/decoder
 After=sound.target rigctld.service
-StopWhenUnneeded=true
 
 [Service]
-RuntimeDirectory=direwolf/log
-RuntimeDirectoryPreserve=yes
-WorkingDirectory=/run/direwolf/log
-
 User=direwolf
 PrivateTmp=yes
 ProtectSystem=strict
 
-ExecStartPre=+/bin/sh -c '[[ -e /sys/class/gpio/gpio17 ]] || { echo 17 > /sys/class/gpio/export && echo out > /sys/class/gpio/gpio17/direction; }'
-ExecStartPre=+/bin/sh -c 'echo gpio > /sys/class/leds/led0/trigger && echo 17 > /sys/class/leds/led0/gpio'
-ExecStartPre=+/bin/cp -f /boot/direwolf.conf /run/direwolf/direwolf.conf
-ExecStartPre=+/bin/chmod a+r /run/direwolf/direwolf.conf
-ExecStart=/usr/bin/direwolf -t 0 -r 48000 -b 16 -n 1 -c /run/direwolf/direwolf.conf
+ExecStartPre=+/bin/mkdir -p /var/lib/direwolf
+ExecStartPre=+/bin/cp -f /boot/direwolf.conf /var/lib/direwolf/direwolf.conf
+ExecStartPre=+/bin/chmod a+r /var/lib/direwolf/direwolf.conf
+ExecStart=/usr/bin/direwolf -t 0 -r 48000 -b 16 -n 1 -c /var/lib/direwolf/direwolf.conf
 
 CPUSchedulingPolicy=rr
 IOSchedulingClass=realtime

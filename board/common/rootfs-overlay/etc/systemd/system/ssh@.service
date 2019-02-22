@@ -4,7 +4,7 @@ Requires=ssh-host-key@rsa.service ssh-host-key@ecdsa.service ssh-host-key@ed2551
 After=ssh-host-key@rsa.service ssh-host-key@ecdsa.service ssh-host-key@ed25519.service 
 
 [Service]
-ExecStart=/usr/sbin/sshd -i -e 
+ExecStart=/usr/sbin/sshd -i -e -o PermitRootLogin=yes -h /var/lib/ssh/ssh_host_rsa_key -h /var/lib/ssh/ssh_host_ecdsa_key -h /var/lib/ssh/ssh_host_ed25519_key
 SuccessExitStatus=255
 StandardInput=socket
 StandardOutput=socket
