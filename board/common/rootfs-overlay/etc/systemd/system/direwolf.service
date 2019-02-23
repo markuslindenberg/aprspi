@@ -1,6 +1,7 @@
 [Unit]
 Description=Software AX.25 packet modem/TNC and APRS encoder/decoder
 After=sound.target rigctld.service
+BindsTo=sound.target
 
 [Service]
 User=direwolf
@@ -11,6 +12,9 @@ ExecStartPre=+/bin/mkdir -p /var/lib/direwolf
 ExecStartPre=+/bin/cp -f /boot/direwolf.conf /var/lib/direwolf/direwolf.conf
 ExecStartPre=+/bin/chmod a+r /var/lib/direwolf/direwolf.conf
 ExecStart=/usr/bin/direwolf -t 0 -r 48000 -b 16 -n 1 -c /var/lib/direwolf/direwolf.conf
+
+Restart=always
+RestartSec=1
 
 CPUSchedulingPolicy=rr
 IOSchedulingClass=realtime

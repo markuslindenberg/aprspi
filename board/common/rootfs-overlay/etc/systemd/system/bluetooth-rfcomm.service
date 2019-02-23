@@ -1,0 +1,14 @@
+[Unit]
+Description=Bluetooth RFCOMM service
+After=bluetooth.service
+Requires=bluetooth.service
+
+[Service]
+;ExecStartPre=/usr/bin/hciconfig hci0 up piscan
+;ExecStartPre=-/usr/bin/sdptool add --channel=1 SP
+ExecStart=/usr/bin/rfcomm watch /dev/rfcomm0 1 /usr/bin/socat /dev/rfcomm0,nonblock,rawer TCP4:127.0.0.1:8001
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=bluetooth.target

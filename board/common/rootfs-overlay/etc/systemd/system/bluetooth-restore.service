@@ -1,0 +1,16 @@
+[Unit]
+Description=Restore bluetooth state
+Before=bluetooth.service
+BindsTo=bluetooth.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StateDirectory=bluetooth
+StateDirectoryMode=0700
+WorkingDirectory=/var/lib/bluetooth
+ExecStart=-/bin/tar -x -o -f /boot/bluetooth.tar
+ExecStop=/bin/tar -c -f /boot/bluetooth.tar .
+
+[Install]
+RequiredBy=bluetooth.service
