@@ -3,7 +3,6 @@ Description=Bluetooth serial UART interface
 After=dev-ttyAMA0.device
 
 [Service]
-ExecStartPre=/bin/sleep 5
 ExecStart=/usr/bin/btattach -N -B /dev/ttyAMA0 -P bcm -S 921600
 Restart=always
 RestartSec=1

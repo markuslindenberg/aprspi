@@ -10,7 +10,7 @@ ProtectSystem=strict
 
 ExecStartPre=+/bin/cp -f /boot/direwolf.conf /etc/direwolf.conf
 ExecStartPre=+/bin/chmod a+r /etc/direwolf.conf
-ExecStart=/usr/bin/direwolf -t 0 -r 48000 -b 16 -n 1 -c /etc/direwolf.conf
+ExecStart=/usr/bin/direwolf -t 0 -c /etc/direwolf.conf
 
 Restart=always
 RestartSec=1

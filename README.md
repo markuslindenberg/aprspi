@@ -51,7 +51,7 @@ git clone -b 2019.02-rc1 https://git.busybox.net/buildroot
 git clone https://github.com/markuslindenberg/aprspi.git
 
 cd buildroot
-make BR2_EXTERNAL=../aprspi aprspi_raspi3-64_defconfig
+make BR2_EXTERNAL=../aprspi aprspi_raspberrypi3_64_defconfig
 make
 ```
 
