@@ -8,10 +8,9 @@ User=direwolf
 PrivateTmp=yes
 ProtectSystem=strict
 
-ExecStartPre=+/bin/mkdir -p /var/lib/direwolf
-ExecStartPre=+/bin/cp -f /boot/direwolf.conf /var/lib/direwolf/direwolf.conf
-ExecStartPre=+/bin/chmod a+r /var/lib/direwolf/direwolf.conf
-ExecStart=/usr/bin/direwolf -t 0 -r 48000 -b 16 -n 1 -c /var/lib/direwolf/direwolf.conf
+ExecStartPre=+/bin/cp -f /boot/direwolf.conf /etc/direwolf.conf
+ExecStartPre=+/bin/chmod a+r /etc/direwolf.conf
+ExecStart=/usr/bin/direwolf -t 0 -r 48000 -b 16 -n 1 -c /etc/direwolf.conf
 
 Restart=always
 RestartSec=1
