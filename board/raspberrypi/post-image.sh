@@ -49,6 +49,8 @@ __EOF__
 
 done
 
+echo "console=tty1" > ${BINARIES_DIR}/rpi-firmware/cmdline.txt
+
 rm -rf "${GENIMAGE_TMP}"
 
 genimage                           \
