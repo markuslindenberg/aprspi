@@ -20,11 +20,11 @@ You'll need:
 
 ## Design
 
-The main design goals are robustness and tight integration of all included components. The device can be switched off / lose power without the possibility of filesystem corruption.
+The main design goals are robustness and tight integration of all included components. The device can be switched off / lose power without filesystem corruption.
 
 * The SD card image only contains a FAT32 partition.
-* The root filesystem is run from initramfs and is mounted read-only. All mutable configuration resides on the Raspberry Pi FAT32 partition (mounted on `/boot/`).
-* `/var` and `/tmp` are tmpfs filesystems.
+* The root filesystem is run from initramfs and will be reset after each reboot.
+* All mutable configuration resides on the Raspberry Pi FAT32 partition (mounted on `/boot/`). The mount point is managed by automount and unmounted after 5 seconds of inactivity.
 
 ## Included Services
 
@@ -41,6 +41,7 @@ The main design goals are robustness and tight integration of all included compo
 * [systemd-journald](https://www.freedesktop.org/software/systemd/man/systemd-journald.service.html): In-memory logging
 * [rngd](https://www.kernel.org/doc/Documentation/hw_random.txt): Hardware RNG support
 * [watchdog](https://github.com/brgl/busybox/blob/master/miscutils/watchdog.c): Support for bcm2835 wachdog
+* [BlueZ 5](http://www.bluez.org/): Bluetooth stack
 
 ## Build Instructions
 
@@ -59,13 +60,21 @@ This will bootstrap and compile a cross compilation toolchain and build all soft
 
 ## SSH / console access
 
-The root password is `tester` and currently it's hardcoded 😱.
+* The root password for console access is `aprspi` and currently it's hardcoded 😱.
+* To enable SSH access put a [authorized_keys](https://manpages.debian.org/stretch/openssh-server/authorized_keys.5.en.html#AUTHORIZED_KEYS_FILE_FORMAT) file on the SD card.
+  It will be used for the root account.
 
 ## Configuration
 
-### Wifi
+It is planned to eventually implement a web interface but for now the TNC has to be set up manually using SSH or console access.
 
-See `iwctl help` for iwctl's usage.
+All persistent configuration files are placed on the SD card's FAT32 filesystem and can also be copied from/to the SD card manually.
+
+### Wifi / networking (optional)
+
+aprspi will use DHCP to configure the ethernet and wifi interfaces.
+
+Wifi is managed by `iwd`, See `iwctl help` for iwctl's usage.
 
 ```
 iwctl station wlan0 scan
@@ -73,32 +82,72 @@ iwctl station wlan0 get-networks
 iwctl connect "some network"
 ```
 
-To enable the wifi connection on bootup all `.psk` files found in `/boot` will be copied to `/var/lib/iwd` and used by iwd during startup.
+Reboot aprspi using `reboot` or use `systemctl restart iwd-restore.service` to save all known wifi networks on the SD card.
 
 ```
-cp /var/lib/iwd/*.psk /etc/
+cp /var/lib/iwd/*.psk /boot/
 ```
 
-### Hamlib / rigctld
+### rigctld (optional)
 
-Configure rigctld's options in `/boot/rigctld.txt`:
+If `rigctld` should be used by Direwolf for PTT, place a file `rigctld.txt` on the SD card (`/boot/rigctld.txt`):
 
 ```
-OPTIONS=-m 1 -r /dev/ttyUSB0 -T 127.0.0.1
+OPTIONS=-m 234 -r /dev/ttyUSB0 -s 9600
 ```
+
+See `rigctld -h` and `rigctld -L` for help. By default rigctld is running on `127.0.0.1:4532` in dummy mode.
+
+### ALSA / Audio levels
+
+Use `arecord` to monitor audio level from the TRX to the TNC:
+
+```
+systemctl stop direwolf.service
+arecord -f s16 -r 44100 -V mono /dev/null
+```
+
+Press `Ctrl+C` to interrupt.
+
+The audio level can be adjusted using `alsamixer`. Use `F3`/`F4` to switch between output and input level, `ESC` to quit.
+Reboot aprspi using `reboot` or use `systemctl restart alsa-restore.service` to save ALSA mixer state on the SD card.
 
 ### Direwolf
 
-Place direwolf's configuration in `/boot/direwolf.conf`.
+Create a file `direwolf.conf` on the SD card.
+See the [Dire Wolf User Guide](https://github.com/wb2osz/direwolf/blob/master/doc/User-Guide.pdf) on how to configure beaconing etc.
+
+```
+ADEVICE default
+ARATE 44100
+ACHANNELS 1
+
+CHANNEL 0
+MYCALL NOCALL-9
+MODEM 1200
+#PTT /dev/ttyUSB0 RTS
+GPSD 127.0.0.1
+#SPEECH dwespeak.sh
+
+AGWPORT 8000
+KISSPORT 8001
+```
+
+Make sure to enable `KISSPORT 8001` for bluetooth to work.
+The TNC can be accessed using 
+
+### Bluetooth
+
+Bluetooth is enabled, any device can pair with `aprspi` without PIN.
+[APRSdroid](https://aprsdroid.org/) works using `TNC (KISS)` with `Bluetooth SPP` connection on channel 1.
 
 ## Upgrading
 
-Replace `/boot/Image` and reboot.
+Replace the `Image` file on the SD card and reboot.
 
 ## ToDo / Future
 
 * Automated builds
-* Bluetooth support
 * Webinterface for configuration/monitoring/upgrading
 * Other applications that use a soundcard
-* Better documentation
+
