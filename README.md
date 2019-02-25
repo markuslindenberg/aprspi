@@ -134,12 +134,14 @@ KISSPORT 8001
 ```
 
 Make sure to enable `KISSPORT 8001` for bluetooth to work.
-The TNC can be accessed using 
+The TNC can be accessed over the network on port 8000 (AGW) or 8001 (KISS).
 
 ### Bluetooth
 
 Bluetooth is enabled, any device can pair with `aprspi` without PIN.
 [APRSdroid](https://aprsdroid.org/) works using `TNC (KISS)` with `Bluetooth SPP` connection on channel 1.
+
+Bluetooth pairings are saved in `bluetooth.tgz` on the SD card on `reboot` or by using `systemctl restart bluetooth-restore.service`.
 
 ## Upgrading
 

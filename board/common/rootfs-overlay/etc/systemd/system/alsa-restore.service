@@ -1,8 +1,6 @@
 [Unit]
 Description=Save/Restore Sound Card State
-ConditionPathExists=!/etc/alsa/state-daemon.conf
 ConditionPathExistsGlob=/dev/snd/control*
-;ConditionPathExists=/boot/asound.state
 After=sound.target
 BindsTo=sound.target
 
