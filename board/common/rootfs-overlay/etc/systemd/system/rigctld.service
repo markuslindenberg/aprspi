@@ -4,9 +4,9 @@ Description=Hamlib TCP rig control daemon
 [Service]
 DynamicUser=yes
 Group=dialout
-ConditionPathExists=/boot/rigctld.txt
-EnvironmentFile=-/boot/rigctld.txt
-ExecStart=/usr/bin/rigctld -vv $OPTIONS
+EnvironmentFile=-/etc/default/rigctld
+ExecStartPre=-+/bin/cp -f /boot/rigctld.txt /etc/default/rigctld
+ExecStart=/usr/bin/rigctld -vv -T 127.0.0.1 $OPTIONS
 
 Restart=always
 RestartSec=1
