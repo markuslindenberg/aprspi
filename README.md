@@ -84,10 +84,6 @@ iwctl connect "some network"
 
 Reboot aprspi using `reboot` or use `systemctl restart iwd-restore.service` to save all known wifi networks on the SD card.
 
-```
-cp /var/lib/iwd/*.psk /boot/
-```
-
 ### rigctld (optional)
 
 If `rigctld` should be used by Direwolf for PTT, place a file `rigctld.txt` on the SD card (`/boot/rigctld.txt`):
@@ -119,21 +115,11 @@ See the [Dire Wolf User Guide](https://github.com/wb2osz/direwolf/blob/master/do
 
 ```
 ADEVICE default
-ARATE 44100
-ACHANNELS 1
-
 CHANNEL 0
-MYCALL NOCALL-9
-MODEM 1200
 #PTT /dev/ttyUSB0 RTS
-GPSD 127.0.0.1
-#SPEECH dwespeak.sh
-
-AGWPORT 8000
-KISSPORT 8001
+GPSD
 ```
 
-Make sure to enable `KISSPORT 8001` for bluetooth to work.
 The TNC can be accessed over the network on port 8000 (AGW) or 8001 (KISS).
 
 ### Bluetooth
