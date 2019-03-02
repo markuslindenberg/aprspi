@@ -10,7 +10,7 @@ DIREWOLF_SITE_METHOD = git
 DIREWOLF_DEPENDENCIES = alsa-lib gpsd hamlib udev host-gen_fff
 
 define DIREWOLF_USERS
-	direwolf -1 direwolf -1 * - - audio,dialout,gpio Direwolf TNC
+	direwolf -1 direwolf -1 * - - - Direwolf TNC
 endef
 
 $(eval $(cmake-package))

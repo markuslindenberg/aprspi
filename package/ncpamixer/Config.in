@@ -1,0 +1,8 @@
+config BR2_PACKAGE_NCPAMIXER
+	bool "ncpamixer"
+	depends on BR2_PACKAGE_NCURSES
+	help
+	  ncurses PulseAudio Mixer
+
+	  https://github.com/fulhax/ncpamixer
+

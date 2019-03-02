@@ -1,0 +1,29 @@
+#!/usr/bin/pulseaudio -nF
+
+### Automatically restore the volume of streams and devices
+load-module module-device-restore
+load-module module-stream-restore
+load-module module-card-restore
+
+load-module module-udev-detect
+load-module module-native-protocol-unix
+
+### Automatically restore the default sink/source when changed by the user
+### during runtime
+### NOTE: This should be loaded as early as possible so that subsequent modules
+### that look up the default sink/source get the right value
+load-module module-default-device-restore
+
+### Automatically move streams to the default sink if the sink they are
+### connected to dies, similar for sources
+load-module module-rescue-streams
+
+### Make sure we always have a sink around, even if it is a null sink.
+load-module module-always-sink
+
+### Automatically suspend sinks/sources that become idle for too long
+# load-module module-suspend-on-idle
+
+load-module module-switch-on-connect
+
+# load-module module-match table=/etc/pulse/match.table
