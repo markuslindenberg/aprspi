@@ -1,14 +1,16 @@
 [Unit]
 Description=Software AX.25 packet modem/TNC and APRS encoder/decoder
-After=pulseaudio.service rigctld.service
-Wants=pulseaudio.service rigctld.service
+After=pulseaudio.service
+Wants=pulseaudio.service
 
 [Service]
 User=direwolf
-PrivateTmp=yes
 RuntimeDirectory=direwolf
 Environment=HOME=%t/direwolf
+PrivateTmp=yes
 ProtectSystem=strict
+ExecStartPre=+/bin/cp -f /boot/direwolf.conf /etc/direwolf.conf
+ExecStartPre=+/bin/chmod a+r /etc/direwolf.conf
 ExecStart=/usr/bin/direwolf -t 0 -c /etc/direwolf.conf
 Restart=always
 RestartSec=1

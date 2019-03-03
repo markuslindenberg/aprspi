@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SVOX_VERSION = debian/1.0+git20130326-8
+SVOX_VERSION = debian/1.0+git20130326-9
 SVOX_SITE_METHOD = git
 SVOX_SITE = https://salsa.debian.org/a11y-team/svox.git
 SVOX_SUBDIR = pico
