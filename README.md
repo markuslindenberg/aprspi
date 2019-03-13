@@ -48,7 +48,7 @@ The main design goals are robustness and tight integration of all included compo
 Please read the excellent [Buildroot user manual](https://buildroot.org/downloads/manual/manual.html) and install all requirements listed there.
 
 ```
-git clone -b 2019.02-rc1 https://git.busybox.net/buildroot
+git clone -b 2019.02 https://git.busybox.net/buildroot
 git clone https://github.com/markuslindenberg/aprspi.git
 
 cd buildroot
@@ -99,14 +99,26 @@ See `rigctld -h` and `rigctld -L` for help. By default rigctld is running on `12
 Use `arecord` to monitor audio level from the TRX to the TNC:
 
 ```
-systemctl stop direwolf.service
 arecord -f s16 -r 44100 -V mono /dev/null
 ```
 
 Press `Ctrl+C` to interrupt.
 
-The audio level can be adjusted using `alsamixer`. Use `F3`/`F4` to switch between output and input level, `ESC` to quit.
-Reboot aprspi using `reboot` or use `systemctl restart alsa-restore.service` to save ALSA mixer state on the SD card.
+The audio level can be adjusted using `pactl`:
+
+```
+pactl set-source-volume @DEFAULT_SOURCE@ 16384
+pactl set-sink-volume @DEFAULT_SINK@ 32768
+```
+
+Both values can be put into `volume.txt` on the SD card to automatically adjust the volume:
+
+```
+# Set audio levels for input and output between 0-65536
+
+OUTPUT=32000
+INPUT=22000
+```
 
 ### Direwolf
 
@@ -117,7 +129,7 @@ See the [Dire Wolf User Guide](https://github.com/wb2osz/direwolf/blob/master/do
 ADEVICE default
 CHANNEL 0
 #PTT /dev/ttyUSB0 RTS
-GPSD
+#GPSD
 ```
 
 The TNC can be accessed over the network on port 8000 (AGW) or 8001 (KISS).

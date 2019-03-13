@@ -1,0 +1,14 @@
+[Unit]
+Description=Set default sound sink and source volumes
+After=pulseaudio.service
+Requires=pulseaudio.service
+
+[Service]
+Type=oneshot
+Environment=OUTPUT=65536
+Environment=INPUT=65536
+ExecStartPre=-/bin/cp -f /boot/volume.txt /etc/default/volume-set
+EnvironmentFile=-/etc/default/volume-set
+ExecStart=/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ $OUTPUT
+ExecStart=/usr/bin/pactl set-source-volume @DEFAULT_SOURCE@ $INPUT
+

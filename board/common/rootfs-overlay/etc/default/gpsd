@@ -1,2 +1,3 @@
 DEVICES=/dev/ttyS0
 OPTIONS=-D 1 -n -r
+USBAUTO=true

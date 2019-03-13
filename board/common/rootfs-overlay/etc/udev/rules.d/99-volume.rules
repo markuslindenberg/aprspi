@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="sound", KERNEL=="card*", TAG+="systemd", ENV{SYSTEMD_WANTS}="volume-set.service"
