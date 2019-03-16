@@ -1,0 +1,10 @@
+config BR2_PACKAGE_MINIMODEM
+	bool "minimodem"
+	select BR2_PACKAGE_ALSA_LIB
+	select BR2_PACKAGE_PULSEAUDIO
+	select BR2_PACKAGE_LIBSNDFILE
+	select BR2_PACKAGE_FFTW_SINGLE
+	help
+	  general-purpose software audio FSK modem
+
+	  http://www.whence.com/minimodem/

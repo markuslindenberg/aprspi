@@ -1,0 +1,7 @@
+config BR2_PACKAGE_MULTIMON_NG
+        bool "multimon-ng"
+        select BR2_PACKAGE_PULSEAUDIO
+        help
+          program to decode radio transmissions
+
+          https://github.com/EliasOenal/multimon-ng
