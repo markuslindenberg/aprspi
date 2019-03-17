@@ -1,0 +1,10 @@
+config BR2_PACKAGE_ITPP
+        bool "itpp"
+	select BR2_PACKAGE_LAPACK
+	select BR2_PACKAGE_FFTW
+	select BR2_PACKAGE_FFTW_DOUBLE
+        help
+          IT++ is a C++ library of mathematical, signal processing
+	  and communication classes and functions.
+
+          https://sourceforge.net/projects/itpp/

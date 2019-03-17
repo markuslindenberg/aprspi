@@ -1,0 +1,10 @@
+config BR2_PACKAGE_DSD
+        bool "dsd"
+        select BR2_PACKAGE_MBELIB
+	select BR2_PACKAGE_LIBSNDFILE
+	select BR2_PACKAGE_ITPP
+	select BR2_PACKAGE_PORTAUDIO
+        help
+          Digital Speech Decoder
+
+          https://github.com/szechyjs/dsd
