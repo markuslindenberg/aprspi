@@ -7,14 +7,18 @@ BindsTo=pulseaudio.service
 User=direwolf
 RuntimeDirectory=direwolf
 Environment=HOME=%t/direwolf
+
 PrivateTmp=yes
 ProtectSystem=strict
-ExecStartPre=+/bin/cp -f /boot/direwolf.conf /etc/direwolf.conf
-ExecStartPre=+/bin/chmod a+r /etc/direwolf.conf
-ExecStart=/usr/bin/direwolf -t 0 -c /etc/direwolf.conf
+
+ExecStart=/usr/bin/direwolf -t 0 -r 48000 -c /etc/direwolf.conf
 Restart=always
 RestartSec=1
-CPUSchedulingPolicy=rr
+
+Nice=-10
+
+IPAddressAllow=127.0.0.1/8 ::1
+IPAddressDeny=any
 
 [Install]
 WantedBy=multi-user.target
